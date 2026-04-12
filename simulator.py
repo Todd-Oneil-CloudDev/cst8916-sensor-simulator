@@ -4,18 +4,18 @@ import os
 from datetime import datetime, timezone
 from azure.iot.device import IoTHubDeviceClient, Message
 
-DOWS_LAKE_CONNECTION_STRING = os.getenv("DOWS_LAKE_CONNECTION_STRING", " ")
-FIFTH_AVE_CONNECTION_STRING = os.getenv("FIFTH_AVE_CONNECTION_STRING", " ")
-NAC_CONNECTION_STRING = os.getenv("NAC_CONNECTION_STRING", " ")
+DOWS_LAKE_CONNECTION_STRING = os.environ.get("DOWS_LAKE_CONNECTION_STRING", "")
+FIFTH_AVE_CONNECTION_STRING = os.environ.get("FIFTH_AVE_CONNECTION_STRING", "")
+NAC_CONNECTION_STRING = os.environ.get("NAC_CONNECTION_STRING", "")
 
-
-def get_telemetry():
+def get_telemetry(location: str):
     return {
+        "location": location,
         "ice-thickness": random.uniform(0.0, 50.0),
         "surface-temp": random.uniform(-25.0, 5.0),
         "snow-accumulation": random.uniform(0.0, 50.0),
         "external-temp": random.uniform(-30.0, 5.0),
-        "reading-timestamp": datetime.now(timezone.utc).isoformat()
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
 def main():
@@ -26,9 +26,9 @@ def main():
     print("Sending telemetry to IoT Hub...")
     try:
         while True:
-            dows_telemetry = get_telemetry()
-            fifth_ave_telemetry = get_telemetry()
-            nac_telemetry = get_telemetry()
+            dows_telemetry = get_telemetry("dows_lake")
+            fifth_ave_telemetry = get_telemetry("fifth_ave")
+            nac_telemetry = get_telemetry("NAC")
 
             dows_message = Message(str(dows_telemetry))
             fifth_ave_message = Message(str(fifth_ave_telemetry))
