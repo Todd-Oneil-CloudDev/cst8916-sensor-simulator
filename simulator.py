@@ -4,9 +4,9 @@ import os
 from datetime import datetime, timezone
 from azure.iot.device import IoTHubDeviceClient, Message
 
-DOWS_LAKE_CONNECTION_STRING = os.environ.get("DOWS_LAKE_CONNECTION_STRING", "")
-FIFTH_AVE_CONNECTION_STRING = os.environ.get("FIFTH_AVE_CONNECTION_STRING", "")
-NAC_CONNECTION_STRING = os.environ.get("NAC_CONNECTION_STRING", "")
+DOWS_LAKE_CONNECTION_STRING="device connection string"
+FIFTH_AVE_CONNECTION_STRING="device connection string"
+NAC_CONNECTION_STRING="device connection string"
 
 def get_telemetry(location: str):
     return {
