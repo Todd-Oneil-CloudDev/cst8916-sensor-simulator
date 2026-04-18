@@ -3,10 +3,13 @@ import random
 import os
 from datetime import datetime, timezone
 from azure.iot.device import IoTHubDeviceClient, Message
+from dotenv import load_dotenv
 
-DOWS_LAKE_CONNECTION_STRING="device connection string"
-FIFTH_AVE_CONNECTION_STRING="device connection string"
-NAC_CONNECTION_STRING="device connection string"
+load_dotenv()
+
+DOWS_LAKE_CONNECTION_STRING= os.getenv("DOWS_LAKE_CONNECTION_STRING", "")
+FIFTH_AVE_CONNECTION_STRING= os.getenv("FIFTH_AVE_CONNECTION_STRING", "")
+NAC_CONNECTION_STRING= os.getenv("NAC_CONNECTION_STRING", "")
 
 def get_telemetry(location: str):
     return {
